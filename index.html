@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown</title>
+    <title>Contagem Regressiva</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Gochi Hand', cursive;
@@ -15,61 +15,265 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #fdf5e6; /* Old Lace - a paper-like color */
-            color: #333;
+            background-color: #333; /* Lousa preta */
+            color: #fdf5e6;
+            overflow: hidden; /* Para os apelidos não criarem scrollbars */
         }
         .container {
             text-align: center;
             border: 2px dashed #ccc;
             padding: 20px 40px;
             border-radius: 10px;
-            transform: rotate(-1deg); /* Slight rotation for a handmade feel */
+            transform: rotate(-1deg);
             box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            background-color: rgba(0,0,0,0.5);
+            z-index: 10;
         }
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: #0056b3; /* A nice blue pen color */
+            color: #87CEEB; /* Azul giz */
         }
         .subtitle {
             font-size: 1.5rem;
             margin-bottom: 30px;
-            color: #555;
+            color: #fdf5e6;
         }
         #timer {
             font-size: 4rem;
             font-weight: bold;
-            color: #d9534f; /* A red marker color */
+            color: #FFB6C1; /* Rosa giz */
+        }
+        .chalk-nickname {
+            position: absolute;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 2rem;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
+    <div id="background-nicknames"></div>
     <div class="container">
-        <h1>Countdown to 14/12/2025 01:30</h1>
-        <p class="subtitle">Almost there...</p>
+        <h1>Contagem regressiva para 14/12/2025 00:30</h1>
+        <p class="subtitle">Está chegando, quase lá...</p>
         <div id="timer"></div>
     </div>
 
     <script>
-        const countDownDate = new Date("2025-12-14T01:30:00").getTime();
+        // Lógica do countdown
+        const countDownDate = new Date("2025-12-14T00:30:00").getTime();
+        const timerElement = document.getElementById("timer");
 
-        const x = setInterval(function() {
+        const countdownInterval = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                timerElement.innerHTML = "A hora chegou!";
+                return;
+            }
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("timer").innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
-
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("timer").innerHTML = "The time has come!";
-            }
+            timerElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
         }, 1000);
+
+        // Lógica dos apelidos no fundo
+        const apelidos = [
+            "minha fofinha",
+            "meu amorzinho",
+            "meu pedacinho de céu",
+            "meu hamburguerzinho do galaxy",
+            "meu paozinho de queijo no café da manhã",
+            "meu wafflezinho",
+            "meu limaozinho com mel",
+            "meu docinho de goiaba",
+            "minha goiabadinha com queijo",
+            "minha maior inspiração",
+            "meu orgulho todinho",
+            "meu coração batendo fora do peito",
+            "amorzinho da minha vida toda",
+            "minha mulher",
+            "futura mãe dos meus filhos",
+            "minha esposa",
+            "amor da minha vida todinha",
+            "minha flor de flamboyant",
+            "meu bem mais precioso",
+            "meu moranguinho do amor",
+            "minha sopinha de sorvete",
+            "minha cocadinha",
+            "meu pãozinho de queijo com catupiry",
+            "meu pizza hut",
+            "meu milkshake do bobs",
+            "meu calzonezinho",
+            "meu pink lemonadezinho",
+            "meu bolinho de limão da budega do bolo",
+            "minha escolha diária",
+            "melhor parte de mim",
+            "meu coração batendo fora do peito",
+            "meu estagiário da google mais lindo que me enche de orgulho",
+            "meu futuro esposo",
+            "pai dos meus filhos",
+            "minha florzinha de flamboyant",
+            "meu hamburguerzinho da galaxy",
+            "minha esfirrinha de banana nevada",
+            "meu gole dagua depois de passar muita sede",
+            "meu suquinho de acerola",
+            "meu lombinho suíno caramelizado",
+            "meu subwayzinho",
+            "minha trufinha da cacau show de licor com cereja",
+            "minha cocadinha",
+            "melhor parte do meu dia",
+            "meu presente divino",
+            "minha escolha diária",
+            "meu melhor amigo",
+            "meu confidente",
+            "meu futuro esposo",
+            "meu amozinho",
+            "minha florizinha",
+            "meu calzonezinho",
+            "meu paozinho de queijo com recheio de catupiry logo depois de acordar",
+            "minha torradinha com mortadela de azeitona",
+            "meu bolinho de pote",
+            "meu cachorro quentezinho do siri",
+            "minha melhor escolha",
+            "minha melhor amigs",
+            "melhor parte do meu dia",
+            "minha futura esposa",
+            "mãe dos meus filhos",
+            "amor da minha vida todinha",
+            "minha drufinha de baguri",
+            "meu hamburguerzinho do madero",
+            "minha polentinha com carne de sol e maionese verde do vila rica",
+            "meu cafezinho ítalo-brasileiro de lá também",
+            "meu almocinho do divino fogão",
+            "meu camarão dijon do camarões",
+            "minha gelatina cremosa de maracujá",
+            "minha bolachinha cozida no leite",
+            "meu pãozinho de queijo com catupiry",
+            "minha coxinha do loucos por coxinha",
+            "minha coxinha do madero",
+            "meu kiwizinho",
+            "meu bolinho de macaxeira",
+            "meu melhor amigo",
+            "meu futuro personificado",
+            "meu lar",
+            "meu confidente",
+            "meu futuro esposo",
+            "pai dos meus filhos",
+            "mulher dos meus sonhos",
+            "meu cafezinha 3 corações robado dos oto",
+            "minha coxinha do loucos por coxinha de frango e de lombo",
+            "minha pipoquinha do jhonny",
+            "meu brownezinho do pma",
+            "meu provolonezinho",
+            "meu docinho do RU",
+            "meu snickerzinho de morango",
+            "meu pãozinho de queijo do villa rica",
+            "minha ladrazinha de apelidos carinhosos",
+            "amor da minha vida inteira",
+            "minha parceira",
+            "minha delicia",
+            "razao do meu viver",
+            "minha futura esposa",
+            "amor da minha vida",
+            "meu yakissobazinho",
+            "minha torradinha de queijo e presunto no café da manhã",
+            "meu pãozinho de queijo",
+            "minha raivinha",
+            "minha bolachinha tabuleiro",
+            "meu brigadeirinho de panela",
+            "meu moussezinho de maracujá com caroço",
+            "meu carocinho do mousse de maracujá",
+            "resposta das minhas orações",
+            "minha notificação preferida",
+            "minha escolha diária",
+            "meu futuro esposo",
+            "amor da minha vida todinha",
+            "meu feijãozinho preto",
+            "meu churrasquinho",
+            "minha torradinha com ketchup, maionese e mostarda",
+            "meu pé de moleque",
+            "meu kinder buenozinho",
+            "meu coração batendo fora do peito",
+            "melhor coisa que já me aconteceu",
+            "meu presente divino",
+            "meu melhor amigo",
+            "meu futuro esposo"
+            ];
+        const chalkColors = ['#FF69B4', '#ADD8E6', '#F0E68C', '#90EE90', '#FFA07A', '#B0C4DE', '#FFDAB9', '#E6E6FA'];
+        const backgroundContainer = document.getElementById('background-nicknames');
+        const placedNicknames = [];
+        let nicknameIndex = 0;
+
+        function isOverlapping(newRect) {
+            for (const placedRect of placedNicknames) {
+                if (!(newRect.right < placedRect.left || 
+                      newRect.left > placedRect.right || 
+                      newRect.bottom < placedRect.top || 
+                      newRect.top > placedRect.bottom)) {
+                    return true; // Overlap detected
+                }
+            }
+            return false;
+        }
+
+        const nicknameInterval = setInterval(function() {
+            if (nicknameIndex >= apelidos.length) {
+                nicknameIndex = 0; // Reinicia o ciclo de apelidos
+            }
+
+            const nicknameText = apelidos[nicknameIndex];
+            const nicknameEl = document.createElement('div');
+            nicknameEl.classList.add('chalk-nickname');
+            nicknameEl.innerText = nicknameText;
+            nicknameEl.style.color = chalkColors[Math.floor(Math.random() * chalkColors.length)];
+            
+            // Adiciona ao DOM fora da tela para medir o tamanho
+            nicknameEl.style.visibility = 'hidden';
+            backgroundContainer.appendChild(nicknameEl);
+            
+            const rect = nicknameEl.getBoundingClientRect();
+            let attempts = 0;
+            const maxAttempts = 50;
+
+            while (attempts < maxAttempts) {
+                rect.x = Math.random() * (window.innerWidth - rect.width);
+                rect.y = Math.random() * (window.innerHeight - rect.height);
+                rect.right = rect.x + rect.width;
+                rect.bottom = rect.y + rect.height;
+
+                if (!isOverlapping(rect)) {
+                    break; // Posição válida encontrada
+                }
+                attempts++;
+            }
+
+            if (attempts < maxAttempts) {
+                nicknameEl.style.left = `${rect.x}px`;
+                nicknameEl.style.top = `${rect.y}px`;
+                nicknameEl.style.transform = `rotate(${Math.random() * 10 - 5}deg)`;
+                nicknameEl.style.visibility = 'visible';
+                placedNicknames.push(rect);
+            } else {
+                // Não conseguiu encontrar espaço, remove o elemento
+                backgroundContainer.removeChild(nicknameEl);
+            }
+
+            nicknameIndex++;
+
+            // Para de adicionar apelidos se a tela ficar muito cheia
+            if (placedNicknames.length > 50) {
+                clearInterval(nicknameInterval);
+            }
+
+        }, 1000);
+
     </script>
 </body>
 </html>
