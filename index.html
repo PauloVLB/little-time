@@ -20,6 +20,7 @@
             overflow: hidden; /* Para os apelidos não criarem scrollbars */
         }
         .container {
+            position: relative; /* Para o posicionamento do botão */
             text-align: center;
             border: 2px dashed #ccc;
             padding: 20px 40px;
@@ -28,6 +29,40 @@
             box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
             background-color: rgba(0,0,0,0.5);
             z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .toggle-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            background: #FFA07A; /* Light Salmon */
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-family: 'Gochi Hand', cursive;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 30px; /* To vertically center the text */
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .toggle-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            background: #FF7F50; /* Coral */
+        }
+        .container.minimized {
+            padding: 15px;
+            transform: rotate(0deg);
+        }
+        .container.minimized h1,
+        .container.minimized .subtitle,
+        .container.minimized #timer {
+            display: none;
         }
         h1 {
             font-size: 2.5rem;
@@ -55,12 +90,26 @@
 <body>
     <div id="background-nicknames"></div>
     <div class="container">
+        <button id="toggle-button" class="toggle-btn">-</button>
         <h1>Contagem regressiva para 14/12/2025 01:30</h1>
         <p class="subtitle">Falta poquin...</p>
         <div id="timer"></div>
     </div>
 
     <script>
+        // Lógica do botão minimizar/maximizar
+        const toggleButton = document.getElementById('toggle-button');
+        const container = document.querySelector('.container');
+
+        toggleButton.addEventListener('click', () => {
+            container.classList.toggle('minimized');
+            if (container.classList.contains('minimized')) {
+                toggleButton.innerText = '+';
+            } else {
+                toggleButton.innerText = '-';
+            }
+        });
+
         // Lógica do countdown
         const countDownDate = new Date("2025-12-14T01:30:00").getTime();
         const timerElement = document.getElementById("timer");
@@ -84,128 +133,11 @@
         }, 1000);
 
         // Lógica dos apelidos no fundo
-        const apelidos = [
-            "minha fofinha",
-            "meu amorzinho",
-            "meu pedacinho de céu",
-            "meu hamburguerzinho do galaxy",
-            "meu paozinho de queijo no café da manhã",
-            "meu wafflezinho",
-            "meu limaozinho com mel",
-            "meu docinho de goiaba",
-            "minha goiabadinha com queijo",
-            "minha maior inspiração",
-            "meu orgulho todinho",
-            "meu coração batendo fora do peito",
-            "amorzinho da minha vida toda",
-            "minha mulher",
-            "futura mãe dos meus filhos",
-            "minha esposa",
-            "amor da minha vida todinha",
-            "minha flor de flamboyant",
-            "meu bem mais precioso",
-            "meu moranguinho do amor",
-            "minha sopinha de sorvete",
-            "minha cocadinha",
-            "meu pãozinho de queijo com catupiry",
-            "meu pizza hut",
-            "meu milkshake do bobs",
-            "meu calzonezinho",
-            "meu pink lemonadezinho",
-            "meu bolinho de limão da budega do bolo",
-            "minha escolha diária",
-            "melhor parte de mim",
-            "meu coração batendo fora do peito",
-            "meu estagiário da google mais lindo que me enche de orgulho",
-            "meu futuro esposo",
-            "pai dos meus filhos",
-            "minha florzinha de flamboyant",
-            "meu hamburguerzinho da galaxy",
-            "minha esfirrinha de banana nevada",
-            "meu gole dagua depois de passar muita sede",
-            "meu suquinho de acerola",
-            "meu lombinho suíno caramelizado",
-            "meu subwayzinho",
-            "minha trufinha da cacau show de licor com cereja",
-            "minha cocadinha",
-            "melhor parte do meu dia",
-            "meu presente divino",
-            "minha escolha diária",
-            "meu melhor amigo",
-            "meu confidente",
-            "meu futuro esposo",
-            "meu amozinho",
-            "minha florizinha",
-            "meu calzonezinho",
-            "meu paozinho de queijo com recheio de catupiry logo depois de acordar",
-            "minha torradinha com mortadela de azeitona",
-            "meu bolinho de pote",
-            "meu cachorro quentezinho do siri",
-            "minha melhor escolha",
-            "minha melhor amigs",
-            "melhor parte do meu dia",
-            "minha futura esposa",
-            "mãe dos meus filhos",
-            "amor da minha vida todinha",
-            "minha drufinha de baguri",
-            "meu hamburguerzinho do madero",
-            "minha polentinha com carne de sol e maionese verde do vila rica",
-            "meu cafezinho ítalo-brasileiro de lá também",
-            "meu almocinho do divino fogão",
-            "meu camarão dijon do camarões",
-            "minha gelatina cremosa de maracujá",
-            "minha bolachinha cozida no leite",
-            "meu pãozinho de queijo com catupiry",
-            "minha coxinha do loucos por coxinha",
-            "minha coxinha do madero",
-            "meu kiwizinho",
-            "meu bolinho de macaxeira",
-            "meu melhor amigo",
-            "meu futuro personificado",
-            "meu lar",
-            "meu confidente",
-            "meu futuro esposo",
-            "pai dos meus filhos",
-            "mulher dos meus sonhos",
-            "meu cafezinha 3 corações robado dos oto",
-            "minha coxinha do loucos por coxinha de frango e de lombo",
-            "minha pipoquinha do jhonny",
-            "meu brownezinho do pma",
-            "meu provolonezinho",
-            "meu docinho do RU",
-            "meu snickerzinho de morango",
-            "meu pãozinho de queijo do villa rica",
-            "minha ladrazinha de apelidos carinhosos",
-            "amor da minha vida inteira",
-            "minha parceira",
-            "minha delicia",
-            "razao do meu viver",
-            "minha futura esposa",
-            "amor da minha vida",
-            "meu yakissobazinho",
-            "minha torradinha de queijo e presunto no café da manhã",
-            "meu pãozinho de queijo",
-            "minha raivinha",
-            "minha bolachinha tabuleiro",
-            "meu brigadeirinho de panela",
-            "meu moussezinho de maracujá com caroço",
-            "meu carocinho do mousse de maracujá",
-            "resposta das minhas orações",
-            "minha notificação preferida",
-            "minha escolha diária",
-            "meu futuro esposo",
-            "amor da minha vida todinha",
-            "meu feijãozinho preto",
-            "meu churrasquinho",
-            "minha torradinha com ketchup, maionese e mostarda",
-            "meu pé de moleque",
-            "meu kinder buenozinho",
-            "meu coração batendo fora do peito",
-            "melhor coisa que já me aconteceu",
-            "meu presente divino",
-            "meu melhor amigo",
-            "meu futuro esposo"
+        const apelidos = 
+            [
+                "meu chameguinho na cama"
             ];
+        
         const chalkColors = ['#FF69B4', '#ADD8E6', '#F0E68C', '#90EE90', '#FFA07A', '#B0C4DE', '#FFDAB9', '#E6E6FA'];
         const backgroundContainer = document.getElementById('background-nicknames');
         const placedNicknames = [];
@@ -225,7 +157,7 @@
 
         const nicknameInterval = setInterval(function() {
             if (nicknameIndex >= apelidos.length) {
-                nicknameIndex = 0; // Reinicia o ciclo de apelidos
+                return;
             }
 
             const nicknameText = apelidos[nicknameIndex];
