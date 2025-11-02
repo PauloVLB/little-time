@@ -111,6 +111,52 @@
                 opacity: 0;
             }
         }
+        .popup-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0,0,0,0.7);
+            border: 2px dashed #ccc;
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 100;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .popup-toggle-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: #FFA07A;
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-family: 'Gochi Hand', cursive;
+            font-size: 16px;
+            line-height: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .popup-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fdf5e6;
+        }
+        #popup-timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFB6C1;
+            text-align: center;
+        }
+        .popup-container.minimized {
+            padding: 5px 10px;
+        }
+        .popup-container.minimized .popup-subtitle,
+        .popup-container.minimized #popup-timer {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -121,6 +167,12 @@
         <h1>Contagem regressiva para 14/12/2025 01:30</h1>
         <p class="subtitle">Falta poquin...</p>
         <div id="timer"></div>
+    </div>
+
+<div id="popup-container" class="popup-container">
+        <button id="popup-toggle-button" class="popup-toggle-btn">-</button>
+        <p class="popup-subtitle">Com uma pequena parada... (05/12/2025)</p>
+        <div id="popup-timer"></div>
     </div>
 
     <script>
@@ -137,7 +189,7 @@
             }
         });
 
-        // Lógica do countdown
+        // Lógica do countdown principal
         const countDownDate = new Date("2025-12-14T01:30:00").getTime();
         const timerElement = document.getElementById("timer");
 
@@ -241,6 +293,39 @@
         }
         createChalkDust();
 
+        // Lógica do countdown do popup
+        const popupCountDownDate = new Date("2025-12-05T00:00:00").getTime();
+        const popupTimerElement = document.getElementById("popup-timer");
+        const popupContainer = document.getElementById('popup-container');
+        const popupToggleButton = document.getElementById('popup-toggle-button');
+
+        popupToggleButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            popupContainer.classList.toggle('minimized');
+            if (popupContainer.classList.contains('minimized')) {
+                popupToggleButton.innerText = '+';
+            } else {
+                popupToggleButton.innerText = '-';
+            }
+        });
+
+        const popupCountdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = popupCountDownDate - now;
+
+            if (distance < 0) {
+                clearInterval(popupCountdownInterval);
+                popupTimerElement.innerHTML = "Chegou!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            popupTimerElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        }, 1000);
     </script>
 </body>
 </html>
