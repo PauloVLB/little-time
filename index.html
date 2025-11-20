@@ -236,7 +236,8 @@
             "meu showzinho de dominguinho agarradinho",
             "meu bolin de limão da budega do bolo",
             "minha tirinha de frango do divino fogao",
-            "minha calma no meio da tempestade"
+            "minha calma no meio da tempestade",
+            "meu carrinho de bate bate"
         ];
         const chalkColors = ['#FF69B4', '#ADD8E6', '#F0E68C', '#90EE90', '#FFA07A', '#B0C4DE', '#FFDAB9', '#E6E6FA'];
         const backgroundContainer = document.getElementById('background-nicknames');
@@ -266,7 +267,7 @@
             backgroundContainer.appendChild(nicknameEl);
             const rect = nicknameEl.getBoundingClientRect();
             let attempts = 0;
-            const maxAttempts = 50;
+            const maxAttempts = 100;
             while (attempts < maxAttempts) {
                 rect.x = Math.random() * (window.innerWidth - rect.width);
                 rect.y = Math.random() * (window.innerHeight - rect.height);
@@ -309,7 +310,7 @@
         createChalkDust();
 
         // Lógica do countdown do popup
-        const popupCountDownDate = new Date("2025-12-05T00:00:00").getTime();
+        const popupCountDownDate = new Date("2025-12-05T16:30:00").getTime();
         const popupTimerElement = document.getElementById("popup-timer");
         const popupContainer = document.getElementById('popup-container');
         const popupToggleButton = document.getElementById('popup-toggle-button');
